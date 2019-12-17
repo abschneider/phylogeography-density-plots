@@ -2,7 +2,9 @@
 
 #### Purpose: Generate density plots from BEAST phylogeography logfiles with Bayes Factor (BF) threshold
 
-User can run `densityplot.R` which calls the functions present in `bayesian_functions.R`, creating intermediary files, or run `densityplot_nointermediaryfiles.R` which only create the final density plot files and spreadsheet with rate values filtered with Bayes Factor.
+User can run `densityplot.R` which calls the functions present in `bayesian_functions.R`, creating intermediary files, or run `densityplot_nointermediaryfiles.R` which only creates the final density plot files and spreadsheet with rate values filtered with BF.
+
+Hint: If user wants only to calculate BF, he can run simply run the function `calculateBF` in `bayesian_functions.R` which calculates a Bayes Factor approximation (as implemented in [SpreaD3](https://academic.oup.com/mbe/article/33/8/2167/2579258).
 
 ### Manual:
 
