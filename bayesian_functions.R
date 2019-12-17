@@ -1,6 +1,6 @@
 # File: Bayesian_functions.R
 # Date created: 12/6/19
-# Last update: 12/16/19 by Adriano Schneider
+# Last update: 12/17/19 by Adriano Schneider
 # Authors: Adriano Schneider, Reilly Hostager & Simon Dellicour
 
 library(knitr) #required for calculateBF and lograteextract
@@ -43,11 +43,11 @@ rateextract <- function(logfile,burninpercentage,locations,traitname) {
 
 ########################
 
-#### calculateBF is a function to calculate the Bayes Factor of a trait from BEAST phylogeography logfiles  ####
-
+#### calculateBF is a function to calculate the Bayes Factor Approximation of BEAST BSSVS logfiles  ####
 
 calculateBF <- function(logfile,burninpercentage,locations,traitname) {
   print("Loading data...")
+  N_traits = as.numeric(length(locations))
   locations = as.data.frame(locations) 
   burnin = as.numeric(burninpercentage)
   log = read.table(logfile, header=T)
@@ -65,7 +65,7 @@ calculateBF <- function(logfile,burninpercentage,locations,traitname) {
         indicatorlabel = combine_words(c(traitname,".indicators.",as.character(locations[i,]),".",as.character(locations[j,])), sep="", and="")
         index1 = match(indicatorlabel,names(log)) # has to be the column index of the indicator for transition from location i to j
         p = sum(log[,index1]==1)/dim(log)[1]
-        K = 10 # K should be divided by 2 if "symetric" case
+        K = N_traits # K should be divided by 2 if "symetric" case
         q = (log(2)+K-1)/(K*(K-1))
         BF = (p/(1-p))/(q/(1-q))
         label <- as.character(combine_words(c(as.character(locations[i,]),"to",as.character(locations[j,])),sep=".",and="")) 
@@ -74,7 +74,7 @@ calculateBF <- function(logfile,burninpercentage,locations,traitname) {
     }
   }
   write.csv(df,file = combine_words(c(traitname,".BFs.csv"), sep="", and=""),row.names=FALSE)
-  print("Bayes factor calculated and saved on a csv file in your working folder.")
+  print("Bayes Factor approximation calculated and saved on a csv file in your working folder.")
 }
 
 ########################

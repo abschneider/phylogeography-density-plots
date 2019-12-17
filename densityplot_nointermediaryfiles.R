@@ -1,6 +1,6 @@
 # File: densityplot_nointermediaryfiles.R
 # Date created: 12/6/19
-# Last update: 12/16/19 by Adriano Schneider
+# Last update: 12/17/19 by Adriano Schneider
 # Authors: Adriano Schneider, Reilly Hostager & Simon Dellicour
 
 library(knitr)
@@ -9,6 +9,7 @@ library(RColorBrewer)
 
 densityplotfromlogfile <- function(logfile,burninpercentage,locations,traitname, BFthreshold, colorscheme) {
   print("Loading data...")
+  N_traits = as.numeric(length(locations))
   locations = as.data.frame(locations) 
   burnin = as.numeric(burninpercentage)
   threshold = as.numeric(BFthreshold)
@@ -19,7 +20,7 @@ densityplotfromlogfile <- function(logfile,burninpercentage,locations,traitname,
 #Calculate product of rate and indicators
   print("Creating Product of rates and indicators empty matrix...")
   df <- data.frame(matrix(NA, nrow = dim(log)[1], ncol = 1))
-  df <- as_tibble(df2)
+  df <- as_tibble(df)
   print("Extracting rates and indicators from logfile...") 
   for (i in 1:dim(locations)[1]) { #for all locations in list of locations
     for (j in 1:dim(locations)[1]) { #and all locations in list of locations
@@ -40,10 +41,10 @@ densityplotfromlogfile <- function(logfile,burninpercentage,locations,traitname,
   productratesindicators <- subset(df, select = -1) #removes empty column from list
   print("Rates successfully extracted.")
 
-#calculate Bayes Factor
+#calculateBF is a function to calculate the Bayes Factor Approximation of BEAST BSSVS logfiles
   print("Creating BF empty matrix...")
   BFdata <- tibble("Transition" = character(),"BayesFactor" = numeric()) #creates empty BF tibble
-  print("Calculating Bayes Factor...")
+  print("Calculating Bayes Factor Approximation...")
   for (i in 1:dim(locations)[1])
   {
     for (j in 1:dim(locations)[1])
@@ -53,7 +54,7 @@ densityplotfromlogfile <- function(logfile,burninpercentage,locations,traitname,
         indicatorlabel = combine_words(c(traitname,".indicators.",as.character(locations[i,]),".",as.character(locations[j,])), sep="", and="")
         index1 = match(indicatorlabel,names(log)) # has to be the column index of the indicator for transition from location i to j
         p = sum(log[,index1]==1)/dim(log)[1]
-        K = 10 # K should be divided by 2 if "symetric" case
+        K = N_traits # K should be divided by 2 if "symetric" case
         q = (log(2)+K-1)/(K*(K-1))
         BF = (p/(1-p))/(q/(1-q))
         label <- as.character(combine_words(c(as.character(locations[i,]),"to",as.character(locations[j,])),sep=".",and="")) 
@@ -62,23 +63,23 @@ densityplotfromlogfile <- function(logfile,burninpercentage,locations,traitname,
     }
   }
 
-# Filter rates using Bayes Factor threshold
+# Filter rates using Bayes Factor Approximation threshold
   BF = as_tibble(BFdata)
   print("Reducing BF matrix to selected threshold...")
   filteredBF = BF %>% filter(BayesFactor >= threshold)
   filteredBF = droplevels(filteredBF)  
   print("Creating last empty matrix...")
-  df <- data.frame(matrix(NA, nrow = dim(rates)[1], ncol = 1))
-  df <- as_tibble(df)
+  df1 <- data.frame(matrix(NA, nrow = dim(rates)[1], ncol = 1))
+  df1 <- as_tibble(df)
   print("Filtering rates of transitions to selected threshold...")
   for (i in 1:dim(filteredBF)[1]){
     test <- as.character(filteredBF$Transition[i]) #figure out how to extract transition...
     index = match(test,names(rates))
     filteredrate <- rates[,index]
-    df <- cbind(df,filteredrate)
+    df1 <- cbind(df1,filteredrate)
   }
-  df <- as.data.frame(subset(df, select = -1)) #removes empty column from list
-  write.csv(df,file = combine_words(c(traitname,".filtered.product.indicator.rates.csv"), sep="", and=""),row.names=FALSE) #print column from list
+  df1 <- as.data.frame(subset(df1, select = -1)) #removes empty column from list
+  write.csv(df1,file = combine_words(c(traitname,".filtered.product.indicator.rates.csv"), sep="", and=""),row.names=FALSE) #print column from list
   plotList = as.character(combine_words(c(traitname,".filtered.product.indicator.rates.csv"), sep="", and=""))
 
 # Plot migration events from filtered rates
@@ -109,7 +110,7 @@ logfile = "example_phylogeo.log"
 burninpercentage = 10
 locations = scan("example_locations.txt",what="", sep="\n")
 traitname = "City"
-BFthreshold = 3
+BFthreshold = 4
 colorscheme = "Dark2"
 
 densityplotfromlogfile(logfile,burninpercentage,locations,traitname, BFthreshold, colorscheme)

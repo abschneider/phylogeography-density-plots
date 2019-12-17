@@ -1,12 +1,15 @@
 # File: densityplot_nointermediaryfiles.R
 # Date created: 12/6/19
-# Last update: 12/16/19 by Adriano Schneider
+# Last update: 12/17/19 by Adriano Schneider
 # Authors: Adriano Schneider
 
 setwd("YOUR WORKING DIRECTORY")
+setwd('/Users/schneider/GitHub/phylogeography-density-plots/')
 source('bayesian_functions.R')
+setwd('/Users/schneider/GitHub/phylogeography-density-plots/Example_files')
 
-#### STEP 1 - CALCULATE BAYES FACTOR AND EXTRACT PRODUCT OF RATES AND INDICATORS AS TWO INDIVIDUAL CSV FILES ####
+
+#### STEP 1 - CALCULATE BAYES FACTOR APPROXIMATION AND EXTRACT PRODUCT OF RATES AND INDICATORS AS TWO INDIVIDUAL CSV FILES ####
 
 logfile = "example_phylogeo.log"
 burninpercentage = 10
@@ -20,7 +23,7 @@ calculateBF(logfile,burninpercentage,locations,traitname)
 
 BFlist = "City.BFs.csv" # Output from calculateBF function
 rates = "City.product.indicator.rates.csv" # Output from rateextract function
-BFthreshold = 3 #Select minimum Bayes Factor threshold
+BFthreshold = 4 #Select minimum Bayes Factor threshold
 
 filterrates(BFlist,rates,BFthreshold)
 
