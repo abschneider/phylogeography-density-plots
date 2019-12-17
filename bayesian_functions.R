@@ -74,7 +74,7 @@ calculateBF <- function(logfile,burninpercentage,locations,traitname) {
     }
   }
   write.csv(df,file = combine_words(c(traitname,".BFs.csv"), sep="", and=""),row.names=FALSE)
-  print("The job here is done boss, please go to your working folder for your results.")
+  print("Bayes factor calculated and saved on a csv file in your working folder.")
 }
 
 ########################
