@@ -1,7 +1,7 @@
 # File: Bayesian_functions.R
 # Date created: 12/6/19
 # Last update: 12/16/19 by Adriano Schneider
-# Authors: Adriano Schneider & Simon Dellicour
+# Authors: Adriano Schneider, Reilly Hostager & Simon Dellicour
 
 library(knitr) #required for calculateBF and lograteextract
 library(tidyverse) #required for lograteextract and filterrates

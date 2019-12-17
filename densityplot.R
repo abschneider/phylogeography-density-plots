@@ -1,3 +1,8 @@
+# File: densityplot_nointermediaryfiles.R
+# Date created: 12/6/19
+# Last update: 12/16/19 by Adriano Schneider
+# Authors: Adriano Schneider
+
 setwd("YOUR WORKING DIRECTORY")
 source('bayesian_functions.R')
 
