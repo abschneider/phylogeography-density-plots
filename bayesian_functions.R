@@ -94,7 +94,7 @@ filterrates <- function(BFlist,rates,BFthreshold) {
   df <- as_tibble(df)
   print("Filtering rates of transitions to selected threshold...")
   for (i in 1:dim(filteredBF)[1]){
-    test <- as.character(filteredBF$Transition[i]) #figure out how to extract transition...
+    test <- as.character(filteredBF$Transition[i])
     index = match(test,names(rates))
     filteredrate <- rates[,index]
     df <- cbind(df,filteredrate)

@@ -62,29 +62,31 @@ densityplotfromlogfile <- function(logfile,burninpercentage,locations,traitname,
       }
     }
   }
-
+  
 # Filter rates using Bayes Factor Approximation threshold
   BF = as_tibble(BFdata)
   print("Reducing BF matrix to selected threshold...")
   filteredBF = BF %>% filter(BayesFactor >= threshold)
-  filteredBF = droplevels(filteredBF)  
+  filteredBF = droplevels(filteredBF)
   print("Creating last empty matrix...")
-  df1 <- data.frame(matrix(NA, nrow = dim(rates)[1], ncol = 1))
+  df1 <- data.frame(matrix(NA, nrow = dim(productratesindicators)[1], ncol = 1))
   df1 <- as_tibble(df1)
   print("Filtering rates of transitions to selected threshold...")
   for (i in 1:dim(filteredBF)[1]){
-    test <- as.character(filteredBF$Transition[i]) #figure out how to extract transition...
-    index = match(test,names(rates))
-    filteredrate <- rates[,index]
+    label <- as.character(filteredBF$Transition[i]) 
+    index = match(label,names(productratesindicators))
+    filteredrate <- as_tibble(productratesindicators[,index], header = T)
+    colnames(filteredrate) <- c(label)
     df1 <- cbind(df1,filteredrate)
   }
   df1 <- as.data.frame(subset(df1, select = -1)) #removes empty column from list
   write.csv(df1,file = combine_words(c(traitname,".filtered.product.indicator.rates.csv"), sep="", and=""),row.names=FALSE) #print column from list
   plotList = as.character(combine_words(c(traitname,".filtered.product.indicator.rates.csv"), sep="", and=""))
+  plot1 = read.csv(plotList)
 
-# Plot migration events from filtered rates
+  # Plot migration events from filtered rates
   for (plotName in plotList){
-    cooPlot<-read.csv(plotName,sep=',')
+    cooPlot<-read.csv(plotName,sep=',', header = T)
     cList <- colorRampPalette(brewer.pal(dim(cooPlot)[2],colorscheme))(dim(cooPlot)[2])
     
     for (p in 1:dim(cooPlot)[2]) {
