@@ -1,6 +1,6 @@
 # Phylogeography Density Plots
 
-#### Purpose: Generate density plots from BEAST phylogeography logfiles with Bayes Factor (BF) threshold
+#### Purpose: Generate density plots from BEAST Bayesian Stochastic Search Variable Selection (BSSVS) logfiles with Bayes Factor approximation (BF) threshold
 
 User can run `densityplot.R` which calls the functions present in `bayesian_functions.R`, creating intermediary files, or run `densityplot_nointermediaryfiles.R` which only creates the final density plot files and spreadsheet with rate values filtered with BF.
 
