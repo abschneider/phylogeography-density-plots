@@ -2,23 +2,53 @@
 
 #### Purpose: Generate density plots from BEAST phylogeography logfiles with Bayes Factor (BF) threshold
 
+User can run `densityplot.R` which calls the functions present in `bayesian_functions.R`, creating intermediary files, or run `densityplot_nointermediaryfiles.R` which only create the final density plot files and spreadsheet with rate values filtered with Bayes Factor.
+
+### Manual:
+
+Function on `densityplot_nointermediaryfiles.R`:
+
+`densityplotfromlogfile(logfile,burninpercentage,locations,traitname, BFthreshold, colorscheme)`
+
+Input:
+
+logfile <- BEAST phylogeography logfile;
+
+burninpercentage <- number from 0-100;
+
+locations <- list of locations;
+
+traitname <- trait from phylogeography;
+
+BFthreshold <- numeric value for Bayes Factor threshold;
+
+colorscheme <- one of the colorschemes from RColorBrewer.
+
+Output:
+
+Product of rates and indicators filtered by BF threshold in CSV format;
+
+Density plots in PDF format.
+
+
+
 Functions on `bayesian_functions.R`:
 
 `rateextract(logfile,burningpercentage,locations,traitname)`
 
 Input:
 
-logfile <- BEAST phylogeography logfile
+logfile <- BEAST phylogeography logfile;
 
-burninpercentage <- number from 0-100
+burninpercentage <- number from 0-100;
 
-locations <- list of locations
+locations <- list of locations;
 
-traitname <- trait from phylogeography
+traitname <- trait from phylogeography.
 
 Output:
 
-product of rates and indicators in CSV format
+Product of rates and indicators in CSV format.
 
 
 
@@ -26,41 +56,45 @@ product of rates and indicators in CSV format
 
 Input:
 
-logfile <- BEAST phylogeography logfile
+logfile <- BEAST phylogeography logfile;
 
-burninpercentage <- number from 0-100
+burninpercentage <- number from 0-100;
 
-locations <- list of locations
+locations <- list of locations;
 
-traitname <- trait from phylogeography
+traitname <- trait from phylogeography.
 
 Output:
 
-transitions and BFs in CSV format
+Transitions and BFs in CSV format.
 
 
 `filterrates(BFlist,rates,BFthreshold)`
 
 Input:
 
-BFlist <- output from calculateBF
+BFlist <- output from calculateBF;
 
-rates <- output from rateextract
+rates <- output from rateextract;
 
-BFthreshold <- numeric value
+BFthreshold <- numeric value for Bayes Factor threshold.
 
 Output:
 
-product of rates and indicators filtered by BF threshold in CSV format
+Product of rates and indicators filtered by BF threshold in CSV format.
 
 
 `plotmigrationevents(plotList,colorscheme)`
 
 Input:
 
-plotList <- output from filterrates
+plotList <- output from filterrates;
 
-colorscheme <- one of the colorschemes from RColorBrewer
+colorscheme <- one of the colorschemes from RColorBrewer.
+
+Output:
+
+Density plots in PDF format.
 
 ### Color schemes from R Color Brewer:
 Sequential palettes (first list of colors), which are suited to ordered data that progress from low to high (gradient). The palettes names are : Blues, BuGn, BuPu, GnBu, Greens, Greys, Oranges, OrRd, PuBu, PuBuGn, PuRd, Purples, RdPu, Reds, YlGn, YlGnBu YlOrBr, YlOrRd.
@@ -69,7 +103,7 @@ Qualitative palettes (second list of colors), which are best suited to represent
 
 Diverging palettes (third list of colors), which put equal emphasis on mid-range critical values and extremes at both ends of the data range. The diverging palettes are : BrBG, PiYG, PRGn, PuOr, RdBu, RdGy, RdYlBu, RdYlGn, Spectral
 
-Reference:
+### Reference:
 
 ```
 @article{hostager2019hepatitis,
