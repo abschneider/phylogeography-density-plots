@@ -1,6 +1,6 @@
 # Phylogeography Density Plots
 
-Generate density plots from BEAST phylogeography logfiles with Bayesian Factor threshold
+Purpose: Generate density plots from BEAST phylogeography logfiles with Bayesian Factor threshold
 
 Functions on bayesian_functions.R:
 
