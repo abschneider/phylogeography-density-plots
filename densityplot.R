@@ -4,10 +4,7 @@
 # Authors: Adriano Schneider
 
 setwd("YOUR WORKING DIRECTORY")
-setwd('/Users/schneider/GitHub/phylogeography-density-plots/')
 source('bayesian_functions.R')
-setwd('/Users/schneider/GitHub/phylogeography-density-plots/Example_files')
-
 
 #### STEP 1 - CALCULATE BAYES FACTOR APPROXIMATION AND EXTRACT PRODUCT OF RATES AND INDICATORS AS TWO INDIVIDUAL CSV FILES ####
 

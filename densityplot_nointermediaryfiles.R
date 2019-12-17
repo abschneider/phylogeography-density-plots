@@ -70,7 +70,7 @@ densityplotfromlogfile <- function(logfile,burninpercentage,locations,traitname,
   filteredBF = droplevels(filteredBF)  
   print("Creating last empty matrix...")
   df1 <- data.frame(matrix(NA, nrow = dim(rates)[1], ncol = 1))
-  df1 <- as_tibble(df)
+  df1 <- as_tibble(df1)
   print("Filtering rates of transitions to selected threshold...")
   for (i in 1:dim(filteredBF)[1]){
     test <- as.character(filteredBF$Transition[i]) #figure out how to extract transition...
