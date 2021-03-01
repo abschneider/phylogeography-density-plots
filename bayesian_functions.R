@@ -30,7 +30,6 @@ rateextract <- function(logfile,burninpercentage,locations,traitname) {
         index2 = match(indicatorslabel,names(log)) # has to be the column index of the transition rate from location i to j
         indicatorsindex <- as_tibble(log[index2]) #transforms the current column from a list into a tibble
         currentindex <- mapply('*',indicatorsindex,rateindex) #multiplies rates with indicators
-        newlabel <- as.character(combine_words(c(as.character(locations[i,]),"to",as.character(locations[j,])),sep=".",and="")) 
         currentindex <- as_tibble(currentindex)
         df2 <- cbind(df2,currentindex) #joins the columnn 
       }}}
@@ -69,7 +68,7 @@ calculateBF <- function(logfile,burninpercentage,locations,traitname) {
         K = N_traits # K should be divided by 2 if "symetric" case
         q = (log(2)+K-1)/(K*(K-1))
         BF = (p/(1-p))/(q/(1-q))
-        label <- as.character(combine_words(c(as.character(locations[i,]),"to",as.character(locations[j,])),sep=".",and="")) 
+        label <- as.character(combine_words(c(as.character(locations[i,]),".",as.character(locations[j,])),sep="",and="")) 
         df <- add_row(df,Transition = label, BayesFactor = BF)
       }
     }
