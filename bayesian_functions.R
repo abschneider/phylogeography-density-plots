@@ -32,10 +32,11 @@ rateextract <- function(logfile,burninpercentage,locations,traitname) {
         currentindex <- mapply('*',indicatorsindex,rateindex) #multiplies rates with indicators
         newlabel <- as.character(combine_words(c(as.character(locations[i,]),"to",as.character(locations[j,])),sep=".",and="")) 
         currentindex <- as_tibble(currentindex)
-        currentindex <- currentindex %>% rename(!!newlabel := indicatorslabel) #relabel header with name of places only
         df2 <- cbind(df2,currentindex) #joins the columnn 
       }}}
   df <- subset(df2, select = -1) #removes empty column from list
+  colnames(df)<-gsub(".indicators.","",colnames(df)) #remove indicators from column labels
+  colnames(df)<-gsub(traitname,"",colnames(df)) #remove traitname from column labels
   print("Storing the product of rates and indicators...")
   write.csv(df,file = combine_words(c(traitname,".product.indicator.rates.csv"), sep="", and=""),row.names=FALSE) #print column from list
   print("Rates successfully extracted and saved on a csv file in your working folder.")
