@@ -107,6 +107,7 @@ filterrates <- function(BFlist,rates,BFthreshold) {
 ########################
 
 #### plotmigrationevents plots the filtered rates from filterrates in density plots and export them as individual PDFs ####
+### Note: Probability that the number of migration events is zero is shown as a bar at the 0 on the X-axis. 
 
 plotmigrationevents <- function(plotList,colorscheme) {
   for (plotName in plotList){
